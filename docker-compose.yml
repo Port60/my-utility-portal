@@ -1,0 +1,17 @@
+version: '2'
+services:
+    db:
+        container_name: myutility_db
+        image: postgres:9.5
+        volumes:
+            - myutility_db:/var/lib/postgresql/data
+        environment:
+            - POSTGRES_PASSWORD=password123
+            - POSTGRES_USER=myutility
+            - POSTGRES_DB=myutility
+            - PGDATA=/var/lib/postgresql/data/pgdata
+        ports:
+            - 5432:5432
+
+volumes:
+    myutility_db: {}

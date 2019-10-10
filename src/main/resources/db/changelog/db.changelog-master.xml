@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="asrar" id="00001">
+		<createSequence incrementBy="1" sequenceName="CLIENT_SEQ"
+			startValue="1" />
+		<createTable tableName="CLIENT">
+			<column name="ID" type="int"></column>
+			<column name="ORG_NAME" type="varchar(255)">
+				<constraints nullable="false" />
+			</column>
+			<column name="ORG_REG_NUMBER" type="varchar(255)" />
+			<column name="version" type="int" />
+			<column name="created" type="datetime" />
+			<column name="created_by_user" type="varchar(255)" />
+			<column name="last_modified" type="datetime" />
+			<column name="last_updated_by_user" type="varchar(255)" />
+		</createTable>
+
+		<addDefaultValue columnDataType="int" columnName="ID"
+			defaultValueSequenceNext="CLIENT_SEQ" tableName="CLIENT" />
+		<addPrimaryKey tableName="CLIENT" columnNames="ID"
+			constraintName="CLIENT_PK" />
+
+		<createSequence incrementBy="1" sequenceName="CLIENT_SITE_SEQ"
+			startValue="1" />
+		<createTable tableName="CLIENT_SITE">
+			<column name="ID" type="int"></column>
+			<column name="CLIENT_ID" type="int"></column>
+			<column name="POSTCODE" type="varchar(255)" />
+			<column name="ADDRESS_LINE_1" type="varchar(255)" />
+			<column name="ADDRESS_LINE_2" type="varchar(255)" />
+			<column name="ADDRESS_LINE_3" type="varchar(255)" />
+			<column name="ADDRESS_LINE_4" type="varchar(255)" />
+			<column name="version" type="int" />
+			<column name="created" type="datetime" />
+			<column name="created_by_user" type="varchar(255)" />
+			<column name="last_modified" type="datetime" />
+			<column name="last_updated_by_user" type="varchar(255)" />
+		</createTable>
+
+		<addDefaultValue columnDataType="int" columnName="id"
+			defaultValueSequenceNext="CLIENT_SITE_SEQ" tableName="CLIENT_SITE" />
+		<addPrimaryKey tableName="CLIENT_SITE" columnNames="id"
+			constraintName="CLIENT_SITE_PK" />
+		<addForeignKeyConstraint baseColumnNames="CLIENT_ID"
+			baseTableName="CLIENT_SITE" constraintName="FK_CLIENT_CLIENTSITE_ID"
+			referencedColumnNames="ID" referencedTableName="CLIENT" />
+
+
+		<createSequence incrementBy="1" sequenceName="UTILITY_TYPE_SEQ"
+			startValue="1" />
+		<createTable tableName="UTILITY_TYPE">
+			<column name="ID" type="int"></column>
+			<column name="UTILITY_NAME" type="varchar(30)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+
+		<addDefaultValue columnDataType="int" columnName="id"
+			defaultValueSequenceNext="UTILITY_TYPE_SEQ" tableName="UTILITY_TYPE" />
+		<addPrimaryKey tableName="UTILITY_TYPE" columnNames="id"
+			constraintName="UTILITY_TYPE_PK" />
+
+		<createSequence incrementBy="1" sequenceName="UTILITY_SEQ"
+			startValue="1" />
+		<createTable tableName="UTILITY">
+			<column name="ID" type="int"></column>
+			
+			<column name="STANDING_CHARGE" type="currency">
+				<constraints nullable="false" />
+			</column>
+			<column name="USAGE" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="ATOMATIC_READING" type="boolean">
+			</column>
+			<column name="CLIENT_SITE_ID" type="int">
+			</column>
+			<column name="UTILITY_TYPE_ID" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int" />
+			<column name="created" type="datetime" />
+			<column name="created_by_user" type="varchar(255)" />
+			<column name="last_modified" type="datetime" />
+			<column name="last_updated_by_user" type="varchar(255)" />
+		</createTable>
+
+		<addDefaultValue columnDataType="int" columnName="id"
+			defaultValueSequenceNext="UTILITY_SEQ" tableName="UTILITY" />
+		<addPrimaryKey tableName="UTILITY" columnNames="id"
+			constraintName="UTILITY_PK" />
+		<addForeignKeyConstraint baseColumnNames="UTILITY_TYPE_ID"
+			baseTableName="UTILITY" constraintName="FK_UTILITY_UTILITY_TYPE"
+			referencedColumnNames="ID" referencedTableName="UTILITY_TYPE" />
+		<addForeignKeyConstraint baseColumnNames="CLIENT_SITE_ID"
+			baseTableName="UTILITY" constraintName="FK_UTILITY_CLIENT_SITE"
+			referencedColumnNames="ID" referencedTableName="CLIENT_SITE" />
+
+
+		<createTable tableName="GAS_UTILITY">
+			<column name="ID" type="int"></column>
+			<column name="MPRN" type="varchar(35)">
+				<constraints nullable="false" />
+			</column>
+			<column name="DAY_RATE_KWH" type="double">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="ID"
+			baseTableName="GAS_UTILITY" constraintName="FK_UTILITY_GAS_UTILITY"
+			referencedColumnNames="ID" referencedTableName="UTILITY" />
+
+		<createTable tableName="ELECTRIC_UTILITY">
+			<column name="ID" type="int"></column>
+			<column name="MPAN" type="varchar(35)">
+				<constraints nullable="false" />
+			</column>
+			<column name="PROFILE_CLASS" type="varchar(5)" />
+			<column name="METER_TIME_CODE" type="varchar(5)" />
+			<column name="LINE_LOSS_FACTOR" type="varchar(5)" />
+<column name="DAY_RATE_KWH" type="double">
+				<constraints nullable="false" />
+			</column>
+			<column name="NIGHT_RATE_KWH" type="double">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint baseColumnNames="ID"
+			baseTableName="ELECTRIC_UTILITY" constraintName="FK_UTILITY_ELECTRIC_UTILITY"
+			referencedColumnNames="ID" referencedTableName="UTILITY" />
+
+		<createSequence incrementBy="1" sequenceName="SUPPLIER_SEQ"
+			startValue="1" />
+		<createTable tableName="SUPPLIER">
+			<column name="ID" type="int"></column>
+			<column name="SUPPLIER_NAME" type="varchar(35)">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int" />
+			<column name="created" type="datetime" />
+			<column name="created_by_user" type="varchar(255)" />
+			<column name="last_modified" type="datetime" />
+			<column name="last_updated_by_user" type="varchar(255)" />
+		</createTable>
+		
+		<addDefaultValue columnDataType="int" columnName="ID"
+			defaultValueSequenceNext="SUPPLIER_SEQ" tableName="SUPPLIER" />
+			
+		<addPrimaryKey tableName="SUPPLIER" columnNames="ID"
+			constraintName="SUPPLIER_PK" />
+		
+
+
+		<createSequence incrementBy="1" sequenceName="UTILITY_SUPPLIER_SEQ"
+			startValue="1" />
+		<createTable tableName="UTILITY_SUPPLIER">
+			<column name="ID" type="int"></column>
+			<column name="UTILITY_ID" type="int" />
+			<column name="SUPPLIER_ID" type="int" />
+			<column name="START_DATE" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="END_DATE" type="datetime">
+				<constraints nullable="false" />
+			</column>
+			<column name="DURATION" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="ACTIVE" type="boolean">
+				<constraints nullable="false" />
+			</column>
+			<column name="version" type="int" />
+			<column name="created" type="datetime" />
+			<column name="created_by_user" type="varchar(255)" />
+			<column name="last_modified" type="datetime" />
+			<column name="last_updated_by_user" type="varchar(255)" />
+		</createTable>
+
+		<addDefaultValue columnDataType="int" columnName="ID"
+			defaultValueSequenceNext="UTILITY_SUPPLIER_SEQ" tableName="UTILITY_SUPPLIER" />
+			
+		<addPrimaryKey tableName="UTILITY_SUPPLIER" columnNames="ID"
+			constraintName="UTILITY_SUPPLIER_PK" />
+		
+		<addForeignKeyConstraint baseColumnNames="UTILITY_ID"
+			baseTableName="UTILITY_SUPPLIER" constraintName="FK_UTILITY_SUPPLIER_UTILITY"
+			referencedColumnNames="ID" referencedTableName="UTILITY" />
+		<addForeignKeyConstraint baseColumnNames="SUPPLIER_ID"
+			baseTableName="UTILITY_SUPPLIER" constraintName="FK_UTILITY_SUPPLIER_SUPPLIER"
+			referencedColumnNames="ID" referencedTableName="SUPPLIER" />
+		
+
+	</changeSet>
+	
+	<changeSet id="00002" author="asrar">
+			
+		<sql>INSERT INTO UTILITY_TYPE (ID,UTILITY_NAME) VALUES (1,'GAS') </sql>
+		<sql>INSERT INTO UTILITY_TYPE (ID,UTILITY_NAME) VALUES (2,'ELECTRIC') </sql>
+	
+	</changeSet>
+	
+	
+	<changeSet id="0003" author="asrar">
+	
+		<addNotNullConstraint tableName="CLIENT_SITE" columnName="client_id"  columnDataType="int"/>
+	</changeSet>
+
+
+</databaseChangeLog>
