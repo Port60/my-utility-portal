@@ -1,11 +1,21 @@
-const path = require('path');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var path = require('path');
+var MiniCssExtractPlugin = require("mini-css-extract-plugin");
+var CopyPlugin = require('copy-webpack-plugin');
 
 
 module.exports = {
     entry: [
-
+        './node_modules/popper.js/dist/umd/popper.min.js',
+        './node_modules/bootstrap/dist/js/bootstrap.min.js',
+        //'./node_modules/pace-progress/pace.min.js',
+        './node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js',
+        './node_modules/@coreui/coreui/dist/js/coreui.min.js',
+        './node_modules/chart.js/dist/Chart.min.js',
         './src/js/main.js',
+        // './node_modules/@coreui/icons/css/coreui-icons.min.css',
+        // './node_modules/flag-icon-css/css/flag-icon.min.css',
+        // './node_modules/font-awesome/css/font-awesome.min.css',
+        // './node_modules/simple-line-icons/css/simple-line-icons.css',
         './src/scss/style.scss',
         './src/scss/vendors/pace-progress/pace.scss'],
     output: {
@@ -51,7 +61,8 @@ module.exports = {
                         }
                     }
                 ]
-            }
+            },
+
         ],
 
     },
@@ -59,7 +70,12 @@ module.exports = {
 
         new MiniCssExtractPlugin({
             filename: "css/bundle.css"
-        })
+        }),
+        new CopyPlugin([
+            { from: './src/img', to: 'img' },
+            { from: './src/icon', to: 'icon' },
+            { from: './src/notifications', to: 'notifications' },
+        ]),
 
     ]
 };
