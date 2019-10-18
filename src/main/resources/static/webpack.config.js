@@ -77,5 +77,9 @@ module.exports = {
             { from: './src/notifications', to: 'notifications' },
         ]),
 
-    ]
+    ],
+    devServer: {
+        contentBase: path.join(__dirname, "../dist/"),
+        port: 9000
+    },
 };

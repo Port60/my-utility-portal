@@ -13,7 +13,7 @@ public class PortalHomeController {
   @RequestMapping(value = "", method = RequestMethod.GET)
   public String home(Model model) {
 
-    return "src/index";
+    return "index";
   }
 
 }

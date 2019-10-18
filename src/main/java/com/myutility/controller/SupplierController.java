@@ -19,7 +19,7 @@ public class SupplierController {
   @RequestMapping(value = "/suppliers", method = RequestMethod.GET)
   public String viewSuppliers(Model model) {
 
-    return "supplier/view";
+    return "suppliers";
   }
 
 

@@ -9,24 +9,13 @@ import org.springframework.web.servlet.resource.PathResourceResolver;
 public class MvcConfig implements WebMvcConfigurer {
 
   private static final String[] CLASSPATH_RESOURCE_LOCATIONS =
-      {"classpath:/static/app/src/", "classpath:/templates/app/"};
+      {"classpath:/static/dist/"};
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
     registry.addResourceHandler("/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS)
         .resourceChain(true).addResolver(new PathResourceResolver());
-    // registry.addResourceHandler("/node_modules/**")
-    // .addResourceLocations("classpath:/templates/app/").resourceChain(true)
-    // .addResolver(new PathResourceResolver());
-    //
-    // registry.addResourceHandler("/js/**").addResourceLocations("classpath:/templates/app/src/")
-    // .resourceChain(true).addResolver(new PathResourceResolver());
-    // registry.addResourceHandler("/img/**").addResourceLocations("classpath:/templates/app/src/")
-    // .resourceChain(true).addResolver(new PathResourceResolver());
-    // registry.addResourceHandler("/icons/**").addResourceLocations("classpath:/templates/app/src/")
-    // .resourceChain(true).addResolver(new PathResourceResolver());
-    // registry.addResourceHandler("/vendors/**").addResourceLocations("classpath:/templates/app/src/")
-    // .resourceChain(true).addResolver(new PathResourceResolver());
+
 
   }
 }
